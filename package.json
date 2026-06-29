@@ -21,11 +21,10 @@
     "build": "tsup",
     "dev": "tsup --watch"
   },
-  "dependencies": {
-    "@react-native-community/netinfo": "^11.0.0"
-  },
+  "dependencies": {},
   "peerDependencies": {
-    "react-native": "*"
+    "react-native": "*",
+    "@react-native-community/netinfo": ">=11.0.0"
   },
   "devDependencies": {
     "tsup": "^8.0.0",
