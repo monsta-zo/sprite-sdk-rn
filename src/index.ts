@@ -16,12 +16,10 @@ interface SpriteEvent {
   payload: Record<string, unknown>;
 }
 
-const DEFAULT_ENDPOINT = 'http://localhost:8000';
+const ENDPOINT = 'https://sprite-app-production-7715.up.railway.app/api';
 
 interface SpriteConfig {
-  endpoint?: string;
   userId?: string | null;
-  version?: string;
   environment?: string;
 }
 
@@ -59,7 +57,6 @@ function init(config: SpriteConfig): void {
       start_time: _appStartTime,
       os: Platform.OS,
       os_version: Platform.Version,
-      version: config.version ?? 'unknown',
       environment: config.environment ?? 'production',
     },
   });
@@ -140,8 +137,7 @@ export default Sprite;
 
 function _send(event: SpriteEvent): void {
   if (!_config) return;
-  const endpoint = (_config.endpoint ?? DEFAULT_ENDPOINT).replace(/\/$/, '') + '/events';
-  fetch(endpoint, {
+  fetch(ENDPOINT + '/events', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(event),
@@ -150,7 +146,6 @@ function _send(event: SpriteEvent): void {
 
 function _meta(): Record<string, unknown> {
   return {
-    version: _config?.version ?? 'unknown',
     environment: _config?.environment ?? 'production',
     os: Platform.OS,
   };
@@ -192,7 +187,7 @@ function _hookFetch(): void {
           : (input as Request).url;
 
     // Sprite 자체 요청 및 Metro 개발 도구 요청은 후킹 안 함
-    if (_config && url.startsWith(_config.endpoint ?? DEFAULT_ENDPOINT)) {
+    if (_config && url.startsWith(ENDPOINT)) {
       return originalFetch(input, init);
     }
     if (url.includes('/symbolicate') || url.includes('__metro') || url.includes('hot-update')) {
