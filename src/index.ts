@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppState, AppStateStatus, Platform } from 'react-native';
-import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
+// import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -48,7 +48,7 @@ function init(config: SpriteConfig): void {
   _hookErrorHandler();
   _hookUnhandledRejection();
   _hookAppState();
-  _hookNetInfo();
+  // _hookNetInfo();
 
   _send({
     session_id: _sessionId,
@@ -279,22 +279,22 @@ function _hookAppState(): void {
   });
 }
 
-function _hookNetInfo(): void {
-  NetInfo.addEventListener((state: NetInfoState) => {
-    _send({
-      session_id: _sessionId,
-      user_id: _userId,
-      platform: 'react_native',
-      type: 'track',
-      name: 'network_state_change',
-      payload: {
-        connection_type: state.type,
-        is_connected: state.isConnected,
-        ..._meta(),
-      },
-    });
-  });
-}
+// function _hookNetInfo(): void {
+//   NetInfo.addEventListener((state: NetInfoState) => {
+//     _send({
+//       session_id: _sessionId,
+//       user_id: _userId,
+//       platform: 'react_native',
+//       type: 'track',
+//       name: 'network_state_change',
+//       payload: {
+//         connection_type: state.type,
+//         is_connected: state.isConnected,
+//         ..._meta(),
+//       },
+//     });
+//   });
+// }
 
 function _hookUnhandledRejection(): void {
   const handler = (event: PromiseRejectionEvent) => {
