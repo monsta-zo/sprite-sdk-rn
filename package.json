@@ -1,6 +1,6 @@
 {
   "name": "@sprite/rn",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Sprite SDK for React Native",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -23,8 +23,7 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "react-native": "*",
-    "@react-native-community/netinfo": ">=11.0.0"
+    "react-native": "*"
   },
   "devDependencies": {
     "tsup": "^8.0.0",

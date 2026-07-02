@@ -53,7 +53,6 @@ __export(index_exports, {
 module.exports = __toCommonJS(index_exports);
 var import_react = __toESM(require("react"));
 var import_react_native = require("react-native");
-var import_netinfo = __toESM(require("@react-native-community/netinfo"));
 var ENDPOINT = "https://sprite-app-production-7715.up.railway.app/api";
 var _config = null;
 var _sessionId = _uuid();
@@ -72,7 +71,6 @@ function init(config) {
   _hookErrorHandler();
   _hookUnhandledRejection();
   _hookAppState();
-  _hookNetInfo();
   _send({
     session_id: _sessionId,
     platform: "react_native",
@@ -252,21 +250,6 @@ function _hookAppState() {
       }, _meta())
     });
     prevState = nextState;
-  });
-}
-function _hookNetInfo() {
-  import_netinfo.default.addEventListener((state) => {
-    _send({
-      session_id: _sessionId,
-      user_id: _userId,
-      platform: "react_native",
-      type: "track",
-      name: "network_state_change",
-      payload: __spreadValues({
-        connection_type: state.type,
-        is_connected: state.isConnected
-      }, _meta())
-    });
   });
 }
 function _hookUnhandledRejection() {

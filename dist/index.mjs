@@ -21,7 +21,6 @@ var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 // src/index.ts
 import React from "react";
 import { AppState, Platform } from "react-native";
-import NetInfo from "@react-native-community/netinfo";
 var ENDPOINT = "https://sprite-app-production-7715.up.railway.app/api";
 var _config = null;
 var _sessionId = _uuid();
@@ -40,7 +39,6 @@ function init(config) {
   _hookErrorHandler();
   _hookUnhandledRejection();
   _hookAppState();
-  _hookNetInfo();
   _send({
     session_id: _sessionId,
     platform: "react_native",
@@ -220,21 +218,6 @@ function _hookAppState() {
       }, _meta())
     });
     prevState = nextState;
-  });
-}
-function _hookNetInfo() {
-  NetInfo.addEventListener((state) => {
-    _send({
-      session_id: _sessionId,
-      user_id: _userId,
-      platform: "react_native",
-      type: "track",
-      name: "network_state_change",
-      payload: __spreadValues({
-        connection_type: state.type,
-        is_connected: state.isConnected
-      }, _meta())
-    });
   });
 }
 function _hookUnhandledRejection() {
